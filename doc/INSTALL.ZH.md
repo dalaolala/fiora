@@ -128,6 +128,20 @@
 ## 第三方安装教程
 
 <https://www.moerats.com/archives/978/>
+```
+#拉取源码并存放于/opt文件夹
+git clone https://github.com/yinxin630/fiora.git -b master /opt/fiora
+cd /opt/fiora
+#安装依赖，这里不能用npm，需要用yarn来安装
+npm i -g yarn
+yarn
+#构建
+npm run build
+#转移产物
+npm run move-dist
+#启动
+npm start
+```
 
 ## FAQ
 
