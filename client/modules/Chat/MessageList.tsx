@@ -67,7 +67,7 @@ function MessageList() {
         if (!tag && isGroup && message.from._id === creator) {
             tag = '群主';
         }
-
+        if (isLogin) {
         return (
             <MessageComponent
                 key={message._id}
@@ -87,7 +87,7 @@ function MessageList() {
                 shouldScroll={shouldScroll}
                 tagColorMode={tagColorMode}
             />
-        );
+        );}
     }
 
     return (
