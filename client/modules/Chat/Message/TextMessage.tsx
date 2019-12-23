@@ -10,12 +10,27 @@ interface TextMessageProps {
 
 function TextMessage(props: TextMessageProps) {
     // eslint-disable-next-line react/destructuring-assignment
-    const content = props.content
+    const hostloc = props.content.indexOf('hostloc');
+    const title = props.content
+        .replace(
+            /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,'');
+            
+    let content = '';
+      
+    if(hostloc !== -1){
+        content = props.content
+        .replace(
+            /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
+            (r) => `<a class="${Style.selecteAble}" href="${r}" rel="noopener noreferrer" target="_blank">${title}</a>`,
+        );
+        
+        content = content.substring(title.length,content.length).replace('【','').replace('】','');
+    }else{
+        content = props.content
         .replace(
             /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
             (r) => `<a class="${Style.selecteAble}" href="${r}" rel="noopener noreferrer" target="_blank">${r}</a>`,
-        )
-        .replace(/#\(([\u4e00-\u9fa5a-z]+)\)/g, (r, e) => {
+        ).replace(/#\(([\u4e00-\u9fa5a-z]+)\)/g, (r, e) => {
             const index = expressions.default.indexOf(e);
             if (index !== -1) {
                 return `<img class="${Style.baidu} ${Style.selecteAble}" src="${transparentImage}" style="background-position: left ${-30
@@ -23,6 +38,8 @@ function TextMessage(props: TextMessageProps) {
             }
             return r;
         });
+            
+    }
 
     return (
         <div
